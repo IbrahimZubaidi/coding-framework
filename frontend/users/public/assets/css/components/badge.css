@@ -1,0 +1,20 @@
+.badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: var(--radius-pill);
+    background: rgb(var(--color-secondary-rgb) / 20%);
+    border: var(--border-secondary-medium);
+    padding: 7px 14px;
+    width: fit-content;
+    margin-bottom: 24px;
+}
+
+.badge__icon {
+    color: var(--color-text-secondary);
+    line-height: 0;
+}
+
+.badge__text {
+    color: var(--color-text-secondary);
+}

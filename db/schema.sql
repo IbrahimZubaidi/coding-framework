@@ -1,0 +1,54 @@
+-- =====================================================================
+-- IMF AutoML Database Schema
+-- =====================================================================
+-- SOURCE OF TRUTH: Always check this before writing SQL queries.
+--
+-- Patterns:
+-- - id: SERIAL PRIMARY KEY (auto-increment)
+-- - status: SMALLINT DEFAULT 0 (0=active, 1=deleted, 2=archived, etc.)
+-- - created_at, updated_at: TIMESTAMPTZ DEFAULT NOW()
+-- - enums: SMALLINT with integer codes (mapped in Python IntEnum)
+-- - foreign keys: ON DELETE CASCADE
+-- =====================================================================
+
+-- Enum Codes:
+-- role: 0=student, 1=instructor, 2=admin
+-- status: 0=active, 1=deleted, 2=archived
+
+-- DROP TABLE IF EXISTS users CASCADE;
+-- CREATE TABLE users (
+--     id SERIAL PRIMARY KEY,
+--     email TEXT UNIQUE NOT NULL,
+--     password_hash TEXT NOT NULL,
+--     first_name TEXT,
+--     last_name TEXT,
+--     role SMALLINT DEFAULT 0,  -- 0=student, 1=instructor, 2=admin
+--     status SMALLINT DEFAULT 0,  -- 0=active, 1=deleted
+--     created_at TIMESTAMPTZ DEFAULT NOW(),
+--     updated_at TIMESTAMPTZ DEFAULT NOW()
+-- );
+
+-- DROP TABLE IF EXISTS datasets CASCADE;
+-- CREATE TABLE datasets (
+--     id SERIAL PRIMARY KEY,
+--     user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+--     name TEXT NOT NULL,
+--     file_size INT,
+--     num_rows INT,
+--     format TEXT,
+--     status SMALLINT DEFAULT 0,  -- 0=active, 1=deleted
+--     created_at TIMESTAMPTZ DEFAULT NOW(),
+--     updated_at TIMESTAMPTZ DEFAULT NOW()
+-- );
+
+-- DROP TABLE IF EXISTS experiments CASCADE;
+-- CREATE TABLE experiments (
+--     id SERIAL PRIMARY KEY,
+--     user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+--     dataset_id INT NOT NULL REFERENCES datasets(id) ON DELETE CASCADE,
+--     name TEXT NOT NULL,
+--     status SMALLINT DEFAULT 0,  -- 0=active, 1=deleted
+--     accuracy NUMERIC,
+--     created_at TIMESTAMPTZ DEFAULT NOW(),
+--     updated_at TIMESTAMPTZ DEFAULT NOW()
+-- );

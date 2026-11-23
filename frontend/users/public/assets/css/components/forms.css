@@ -1,0 +1,165 @@
+.eye-icon--hide { display: none; }
+.password-toggle.is-visible .eye-icon--show { display: none; }
+.password-toggle.is-visible .eye-icon--hide { display: block; }
+
+.form-field .form-field-error { color: var(--color-text-danger); }
+.form-field .is-invalid {
+    color: var(--color-text-danger);
+    border: var(--border-danger);
+}
+
+.form-row {
+    width: 100%;
+    display: flex;
+    align-items: start;
+    gap: 16px;
+}
+
+.form-field {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.form-field__input-wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form-field label {
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+}
+
+.form-field input,
+.form-field textarea,
+.form-field select {
+    border-radius: var(--radius-lg);
+    padding: 13.5px 16px;
+    background: var(--color-bg-muted);
+    border: var(--border-muted);
+    height: 46px;
+    box-sizing: border-box;
+    line-height: normal;
+}
+
+.form-field select {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.form-field textarea {
+    height: calc(46px * 5);
+}
+
+.form-field input:active,
+.form-field input:focus,
+.form-field select:active,
+.form-field select:focus { outline: unset }
+
+.form-field input::placeholder { color: var(--color-text-primary-medium) }
+
+.password-toggle {
+    position: absolute;
+    display: flex;
+    border: none;
+    background-color: unset;
+    right: 12px;
+    top: calc(46px / 2 - 17px / 2);
+}
+
+/* ─── Custom Select ──────────────────────────────────── */
+
+.cs-trigger {
+    width: 100%;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 0 16px;
+    border-radius: var(--radius-lg);
+    background: var(--color-bg-muted);
+    border: var(--border-muted);
+    color: var(--color-text-primary);
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-regular);
+    cursor: pointer;
+    text-align: left;
+    box-sizing: border-box;
+    transition: border-color var(--transition-fast);
+}
+
+.cs-trigger:focus { outline: none; }
+
+.cs-trigger--placeholder .cs-trigger__text { color: var(--color-text-primary-medium); }
+
+.cs-trigger__text {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.cs-trigger__icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    color: var(--color-text-muted);
+    transition: transform var(--transition-fast);
+}
+
+.cs-trigger--open .cs-trigger__icon { transform: rotate(180deg); }
+
+.cs-listbox {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    z-index: var(--z-sticky);
+    list-style: none;
+    margin: 0;
+    padding: 4px;
+    background: var(--color-bg-primary);
+    border: var(--border-muted);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--surface-shadow-md);
+    max-height: calc(var(--cs-max, 6) * 38px + 8px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--color-primary-rgb) / 20%) transparent;
+}
+
+.cs-listbox--open { display: block; }
+
+.cs-option {
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition: background var(--transition-fast), color var(--transition-fast);
+    user-select: none;
+}
+
+.cs-option:hover { background: var(--color-bg-secondary); }
+
+.cs-option--selected {
+    background: var(--color-bg-quaternary-faint);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-semibold);
+}
+.cs-option--disabled {
+    color: var(--color-text-tertiary);
+    background: var(--color-bg-secondary);
+    font-style: italic;
+    cursor: default;
+    pointer-events: none;
+}

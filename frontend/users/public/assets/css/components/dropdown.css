@@ -1,0 +1,41 @@
+/* Shared Dropdown Styles */
+.dropdown-menu {
+    position: absolute;
+    inset-inline-end: 0;
+    padding: 5px 0;
+    width: 206px;
+    border: var(--border-tertiary);
+    border-radius: 14px;
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+}
+
+.dropdown-menu[data-bs-popper] {
+    inset-inline-end: 0;
+    inset-inline-start: unset;
+}
+
+.dropdown-item {
+    padding: 0;
+    color: var(--color-text-primary);
+}
+
+.dropdown-item:hover {
+    color: unset;
+    background-color: transparent;
+}
+
+.dropdown-item:has(.settings-link) {
+    padding-bottom: 5px;
+}
+
+.dropdown-item:has(.logout-link) {
+    padding-top: 5px;
+    border-top: var(--border-quaternary);
+    color: var(--color-text-danger);
+    overflow: hidden;
+}
+
+.logout-link {
+    border-radius: 0 0 6px 6px;
+}

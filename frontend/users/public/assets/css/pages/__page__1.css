@@ -1,0 +1,1021 @@
+/*
+ * __page__.css — comprehensive CSS reference for IMF AutoML pages
+ *
+ * HOW TO USE THIS FILE
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Copy the relevant @imports and paste them at the top of your new page CSS.
+ * Then add page-specific overrides and layouts below.
+ *
+ * IMPORT RULES
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Every page CSS must start with styles.css (global reset + tokens + theme).
+ * Then import only the component CSS files your page actually uses.
+ * Do NOT import everything — only what the page renders.
+ *
+ * WHAT GOES WHERE
+ * ─────────────────────────────────────────────────────────────────────────────
+ * tokens.css    → CSS custom properties (--color-*, --font-*, --space-*, etc.)
+ *                 Never hardcode values — always use a token.
+ * theme.css     → [data-theme="dark"] overrides for bg/text/border tokens only.
+ *                 Add dark overrides there, not here.
+ * styles.css    → Imports tokens + theme + base reset. Always the first import.
+ * components/   → One file per reusable component. Import only what you render.
+ * pages/        → This file. Page-specific layout that doesn't belong in any
+ *                 component. Never add generic components here.
+ *
+ * NAMING RULES
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Classes/IDs/files  → kebab-case
+ * State modifiers    → is- prefix:  is-active, is-open, is-loading
+ * Custom properties  → --kebab-case semantic names: --color-primary, not --blue
+ * Max 2-3 words per class name
+ * Never create component-scoped replacements for global classes
+ * (form-field, form-field__input-wrap, form-field-error, form-row, form-hint)
+ *
+ * TOKEN QUICK REFERENCE
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Colors:
+ *   --color-primary           #05223A  (brand dark blue)
+ *   --color-secondary         #F18020  (brand orange)
+ *   --color-bg-primary        white / #0A1520 dark
+ *   --color-bg-secondary      #F8F4EF / #0D1E30 dark
+ *   --color-bg-tertiary       --color-primary (sidebar/navbar bg)
+ *   --color-bg-card-primary   white / #112438 dark
+ *   --color-text-primary      --color-primary / white dark
+ *   --color-text-muted        #6A7282
+ *   --color-text-secondary    --color-secondary
+ *   --color-text-success      #00C950
+ *   --color-text-warning      #FE9A00
+ *   --color-text-danger       #FB2C36
+ *   --color-text-white        white
+ *   --color-text-white-medium rgb(white / 60%)
+ *
+ * Spacing:     --space-2xs 4px  · --space-xs 8px  · --space-sm 12px
+ *              --space-md 16px  · --space-lg 24px  · --space-xl 32px
+ *              --space-2xl 48px · --space-3xl 64px
+ *
+ * Radius:      --radius-xs 4px  · --radius-sm 8px  · --radius-lg 12px
+ *              --radius-xl 16px · --radius-2xl 24px · --radius-pill 999px
+ *
+ * Font sizes:  --font-size-xs 12px · --font-size-sm 14px · --font-size-md 16px
+ *              --font-size-lg 18px · --font-size-xl 20px · --font-size-2xl 24px
+ *              --font-size-3xl 36px · --font-size-4xl 48px
+ *
+ * Font weights: --font-weight-regular 400 · --font-weight-medium 500
+ *               --font-weight-semibold 600 · --font-weight-bold 700
+ *               --font-weight-extrabold 800
+ *
+ * Motion:      --transition-fast 160ms  · --transition-base 240ms
+ *              --transition-slow 360ms
+ *
+ * Shadows:     --card-shadow · --card-shadow-hover · --surface-shadow-sm
+ *              --surface-shadow-md
+ *
+ * Z-index:     --z-base 1 · --z-raised 10 · --z-dropdown 100 · --z-sticky 200
+ *              --z-sidebar 500 · --z-navbar 1000 · --z-modal 1001 · --z-toast 1002
+ *
+ * Borders (pre-built):
+ *   --border-primary         1px solid --color-primary
+ *   --border-secondary       1px solid --color-secondary
+ *   --border-tertiary        1px solid #EBE0D0
+ *   --border-quaternary      1px solid #F3F4F6
+ *   --border-muted           2px solid #E5E7EB
+ *   --border-white-faint     1px solid rgb(white / 10%)
+ *   --border-white-subtle    1px solid rgb(white / 20%)
+ *   --border-white-medium    1px solid rgb(white / 30%)
+ *   --border-card-primary    1px solid #EBE0D0
+ *
+ * Sizing:
+ *   --navbar-height 65px  · --input-height 46px
+ *   --button-height-sm 36px · --button-height-md 44px · --button-height-lg 52px
+ *   --card-padding 24px
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * BUTTON VARIANTS (from components/button.css)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   .btn                  default orange filled button
+ *   .btn--dark            dark/navy variant
+ *   .btn--danger          red destructive action
+ *   .btn--ghost           transparent with orange text
+ *   .btn--ghost-green     transparent with green text
+ *   .btn--outline         white bg, orange border
+ *   .btn--pill            border-radius: pill
+ *   .btn--lg              large height + font
+ *   .btn--sm              small padding + font
+ *   .btn--full            width: 100%
+ *   .btn--inline-icon     inline-flex with gap for icon+label
+ *   .ghost-btn            icon-only button, transparent bg (on dark surfaces)
+ *   .btn[aria-busy="true"] pointer-events: none (set by setButtonLoading())
+ *   .btn:disabled         opacity 0.5, not-allowed cursor
+ *   .btn-spinner          14px spinning border circle (injected by setButtonLoading)
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * FORM CLASSES (from components/forms.css)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   Global structure — always use these, never create custom replacements:
+ *
+ *     <div class="form-field">
+ *         <label>Label</label>
+ *         <div class="form-field__input-wrap">
+ *             <input ...>
+ *             <span class="form-field-error"></span>
+ *         </div>
+ *     </div>
+ *
+ *   .form-row              flex row for two fields side-by-side
+ *   .form-field            flex column with gap; flex:1 inside .form-row
+ *   .form-field__input-wrap  relative container for input + error + toggle icon
+ *   .form-field-error      red validation message below input
+ *   .form-hint             small muted helper text (add manually if needed)
+ *   .is-invalid            red border + text on input/select when invalid
+ *
+ *   Custom select classes:
+ *   .cs-trigger            styled button replacing <select>
+ *   .cs-trigger--open      rotate chevron icon 180deg
+ *   .cs-trigger--placeholder  muted text color when no value selected
+ *   .cs-listbox            dropdown list (position: absolute)
+ *   .cs-listbox--open      display: block
+ *   .cs-option             each list item
+ *   .cs-option--selected   highlighted selected state
+ *   .cs-option--disabled   greyed out, pointer-events: none
+ *
+ *   Password toggle:
+ *   .password-toggle       absolute positioned button at right of input
+ *   .password-toggle.is-visible  switches hide/show icon
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * DATA TABLE CLASSES (from components/dataTable.css)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   .data-table-toolbar    flex row: search left, chips center, actions right
+ *   .data-table-search     pill search bar with icon + input
+ *   .data-table-toolbar__end  ml-auto actions area (filter btn, export btn)
+ *   .data-table-chips      flex chip group for status/category filter tabs
+ *   .data-table-chip       individual chip; .is-active → primary bg
+ *   .data-table-scroll     overflow-x: auto wrapper with border+radius
+ *   .data-table            full-width table
+ *   .data-table__th        header cell; .is-sortable → cursor pointer; ::after ↑↓
+ *   .data-table__td        body cell (padding, vertical-align: middle)
+ *   .data-table__td--truncate  overflow ellipsis (set max-width on the td)
+ *   .data-table__td--accent    secondary color + bold (prices/amounts)
+ *   .data-table__td--muted     muted color secondary text
+ *   .data-table__empty     centered empty state row
+ *   .data-table-ref        monospace reference/ID pill (#F3F4F6 bg)
+ *   .data-table-footer     flex row: end-aligned, holds pagination
+ *   .data-table-status     status badge pill (inline-flex, rounded)
+ *   .data-table-status--approved    green
+ *   .data-table-status--pending     amber
+ *   .data-table-status--rejected    red
+ *   .data-table-status--canceled    red
+ *   .ghost-btn (inside .data-table)  icon action button, muted by default
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * KPI CARD CLASSES (from components/kpiCard.css)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   .kpi-card              flex column, padding 21px, gap 12px
+ *   .kpi-card--centered    align-items: center + text-align: center
+ *   .kpi-card__icon        44×44 rounded square for icon
+ *   .kpi-card__content     flex column for value+label
+ *   .kpi-card__value       24px extrabold primary text
+ *   .kpi-card__label       12px muted caption
+ *   .kpi-card__hint        12px semibold hint (trend/change indicator)
+ *   Wrap in .card for the card surface
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * HERO VARIANTS (from components/hero.css)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   .hero-split            two-column: left content + right image, padding 128px 131px
+ *   .hero-simple           centered column, padding 80px 299px
+ *   .hero-article          left-aligned article heading, padding 48px 0
+ *   .hero-course           course header split with sticky offer card
+ *   All variants share: --color-primary bg, grid-lines bg-image, ::before overlay
+ *
+ *   .hero-title            48px extrabold
+ *   .hero-title__plain     white color
+ *   .hero-title__highlight secondary/orange color
+ *
+ *   Hero split internals:
+ *   .hero-split__left / .hero-split__right    flex:1 columns
+ *   .hero-split__image-wrap                   rounded card with dark gradient overlay
+ *   .hero-split__kpis                         absolute bottom KPI bar
+ *   .hero-split__kpi                          frosted glass KPI item
+ *   .hero-split__chips                        suggestion chips below search
+ *
+ *   Hero simple (e.g. courses page):
+ *   .search-input          dark glass search input (works on primary bg)
+ *
+ *   Breadcrumb (imported by hero.css):
+ *   nav.breadcrumb         flex row, gap 8px
+ *   .breadcrumb__item      flex row item with separator
+ *   .breadcrumb__item--current span  primary color + semibold
+ *   .breadcrumb__link      muted → hover primary
+ *   .breadcrumb__sep       muted separator character
+ *   .breadcrumb__back      back arrow link
+ *   On dark hero: use hero-article/hero-course class to override breadcrumb colors
+ *
+ *   Badge (imported by hero.css):
+ *   .badge                 orange-tint pill with icon + text (above hero title)
+ *   .badge__icon           orange icon
+ *   .badge__text           orange label
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * SECTION HEADER (from components/sectionHeader.css)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   .section-header          flex row, space-between, padding 0 32px, padding-top 32px
+ *   .section-header__left    flex column for title + subtitle
+ *   .section-header__title   24px extrabold
+ *   .section-header__subtitle 14px muted
+ *   .section-header__actions flex row gap-xs for buttons
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * PAGINATION (from components/pagination.css)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   .pagination             flex centered row, gap-xs, margin-top-xl
+ *   .pagination__btn        36×36 pill button, secondary color text
+ *   .pagination__btn--active  orange bg + white text
+ *   .pagination__btn--nav   wider (padding 0 16px) for prev/next
+ *   .pagination__btn--disabled  opacity 0.4, pointer-events: none
+ *   .pagination__ellipsis   non-interactive ... separator
+ *   Place inside .data-table-footer for inline table pagination
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * CONFIRM MODAL (from components/confirmModal.css)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   Rendered by showConfirmModal() — CSS is auto-loaded via styles.css.
+ *   .confirm-modal-overlay  fixed inset backdrop, z-modal, fade animation
+ *   .confirm-modal          centered card: max-width 400px, padding xl
+ *   .confirm-modal__title   18px bold
+ *   .confirm-modal__body    14px muted
+ *   .confirm-modal__actions flex end-row with cancel + confirm buttons
+ *   .confirm-modal__cancel  muted bg cancel button
+ *   .btn--danger            red confirm button (also in button.css)
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * TOAST / USER MESSAGE (from components/message.css)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   Rendered by showUserMessage() — no markup needed, all JS-injected.
+ *   Positions: top, top-right, top-left, bottom, bottom-right, bottom-left
+ *   Variants:  --success (green), --error (red), --warning (amber), --muted (grey)
+ *   No page-level CSS needed for toasts.
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * CARD (from components/card.css)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   .card   white bg, border-card-primary border, subtle shadow, radius 16px
+ *   Use as a surface wrapper for any content block (kpi-card, dashboard widget, etc.)
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * SIDEBAR (from components/sidebar.css)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   Rendered by mountStudentSidebar() / mountCourseSidebar() — no markup needed.
+ *   body:has(aside .sidebar) main   → auto margin-inline-start: 260px (desktop)
+ *   @media ≤1199.98px               → collapsed to 65px icon-only
+ *   @media ≤767.98px                → bottom nav bar
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * SPINNER (from components/spinner.css)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   .spinner-wrapper   centered flex container, min-height 200px, orange color
+ *                      auto-injected by scripts.js into [data-spinner] elements
+ *                      No page-level CSS needed — imported via styles.css.
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * SEARCH INPUT (from components/searchInput.css)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   Standalone search bar — pill shape, on-surface (light bg). Use on public pages
+ *   where the search is NOT inside a data-table-toolbar.
+ *
+ *   .search-input           flex row, pill border, bg-primary
+ *   .search-input__icon     muted icon (SVG, 1.1rem)
+ *   .search-input__field    flex:1 transparent input, no border/outline
+ *   .search-input__btn      right-side submit button (radius 10px)
+ *
+ *   Note: the dark glass variant (hero search) is .search-input on .hero-simple —
+ *   hero.css overrides bg/border for that context, no extra class needed.
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * DROPDOWN MENU (from components/dropdown.css)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   Bootstrap dropdown wrapper — light surface, rounded border.
+ *
+ *   .dropdown-menu             absolute, 206px wide, border-tertiary, radius 14px
+ *   .dropdown-item             full-width item, resets BS colors
+ *   .dropdown-item:has(.settings-link)   padding-bottom: 5px
+ *   .dropdown-item:has(.logout-link)     top border separator, danger color, rounded bottom
+ *   .logout-link               rounded bottom corners
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ACTION CARD (from components/actionCard.css)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   Quick-action card: colored icon top-left, optional badge top-right, buttons at bottom.
+ *   Wrap in .card for the surface.
+ *
+ *   .action-card               padding 21px, flex column, gap 12px
+ *   .action-card__top          flex row, space-between (icon + badge)
+ *   .action-card__icon         44×44 rounded square (radius-lg), inline-flex center; set bg via inline style or utility
+ *   .action-card__icon svg     22×22
+ *   .action-card__badge        xs semibold pill, muted color + bg-secondary
+ *   .action-card__badge--accent  green text + green-tinted bg (#00C950)
+ *   .action-card__body         flex column, gap 4px, flex:1
+ *   .action-card__title        md bold
+ *   .action-card__description  xs muted, mb 4px
+ *   .action-card__actions      flex row gap-sm; each .btn gets flex:1, height 36px, 12px bold
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * FORM CARD (from components/formCard.css)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   Titled card section wrapping a form or form group. Wrap in .card.
+ *
+ *   .form-card                 padding card-padding, flex column, gap-md
+ *   .form-card__header         flex row gap-xs, md bold — section title row
+ *   .form-card__icon           inline-flex, orange SVG 18×18
+ *   .form-card__hint           sm muted text, margin-top -8px (below header)
+ *
+ *   Note: .form-card inside a page CSS already has a different definition (centered
+ *   public form layout). Import formCard.css for the dashboard variant; use the
+ *   page-level .form-card class only on public pages.
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * SELECT OPTIONS — radio-card style (from components/selectOptions.css)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   Visual radio buttons styled as clickable option cards.
+ *   Used for: period pickers, difficulty, mode selection, etc.
+ *
+ *   .select-options            flex row, gap-sm (wraps on mobile <480px)
+ *   .select-option             flex:1, row layout, radius-lg, border-card-primary; acts as <button>
+ *   .select-option__radio      18×18 custom radio dot, orange fill when selected
+ *   .select-option__body       flex column, gap 2px
+ *   .select-option__label      sm semibold
+ *   .select-option__sub        xs muted
+ *   .select-option__locked     xs disabled-color (lock message)
+ *   .select-option--selected   orange border, faint-quaternary bg; label turns orange
+ *   .select-option:disabled    opacity 0.5, not-allowed
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * STATS BAR — component (from components/statsBar.css)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   Horizontal strip of platform KPI stats on public pages.
+ *   NOTE: the page-level .stats-bar defined below is a custom layout variant;
+ *   this component version is the canonical one — prefer importing statsBar.css.
+ *
+ *   .stats-bar                 flex row, space-between, padding 24px 145px, bg-secondary
+ *   .stats-bar__item           flex:1, column, center-aligned
+ *   .stats-bar__icon           secondary color, line-height:0
+ *   .stats-bar__value          2xl extrabold, primary color
+ *   .stats-bar__label          sm, tertiary color
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * STEPS SECTION (from components/stepsSection.css)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   "How it works" / numbered steps layout. Full-width section.
+ *
+ *   .steps-section             padding 80px 131px, bg-secondary, flex column, gap 56px
+ *   .steps-section--flush      removes padding + bg (embed inside another section)
+ *   .steps-section--compact    tighter step cards
+ *   .steps-section__header     centered column, max-width 580px
+ *   .steps-section__label      sm semibold secondary (eyebrow label)
+ *   .steps-section__title      3xl extrabold
+ *   .steps-section__subtitle   md tertiary
+ *   .steps-section__grid       CSS grid, columns: var(--steps-cols, 3) — override with style="--steps-cols:4"
+ *
+ *   .step-card                 card surface: border, radius-xl, padding 29px, flex column
+ *   .step-card__top            flex row space-between: icon-wrap + step number
+ *   .step-card__icon-wrap      40×40 square, radius-sm, faint-quaternary bg, orange icon
+ *   .step-card__number         32px extrabold, 20%-opacity orange (decorative)
+ *   .step-card__title          lg bold
+ *   .step-card__description    sm tertiary, relaxed line-height
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * SLIDER SECTION (from components/sliderSection.css)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   Horizontally scrollable card slider for public pages (e.g. featured items).
+ *
+ *   .slider-section            padding 80px 131px, bg-primary, flex column, gap 40px
+ *   .slider-section__header    flex row, align-end, space-between
+ *   .slider-section__titles    flex column (eyebrow + main title)
+ *   .slider-section__title     14px semibold secondary (eyebrow)
+ *   .slider-section__subtitle  30px extrabold primary
+ *   .slider-section__link      sm medium secondary — "View all" link
+ *   .slider-section__track     overflow-x auto, scroll-snap-type x mandatory, no scrollbar
+ *                               children: flex:0 0 calc((100% - 25px*3)/4) — 4-up by default
+ *   .slider-section__controls  flex row end, gap-xs — prev/next buttons
+ *   .slider-section__btn       36×36 pill, orange border, transparent bg; disabled → opacity 0.35
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * COMPARISON SECTION (from components/comparisonSection.css)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   Two-column "vs" layout: dark card vs light card. Used for feature comparison.
+ *
+ *   .comparison-section        padding 80px 131px, bg-primary, flex column center, gap 48px
+ *   .comparison-section__header text-center column, max-width 580px
+ *   .comparison-section__label sm semibold secondary, letter-spacing 0.06em
+ *   .comparison-section__title 3xl extrabold
+ *   .comparison-section__subtitle md tertiary
+ *   .comparison-section__grid  2-col grid, gap 32px
+ *
+ *   .comparison-card           radius-xl, padding 24px, relative overflow hidden
+ *   .comparison-card--dark     bg: bg-card-quaternary (navy) — light text
+ *   .comparison-card--light    bg: bg-card-tertiary — dark text
+ *   .comparison-card::after    decorative blob (220px circle) — dark: orange top-right; light: faint bottom-right
+ *   .comparison-card__badge    pill badge (orange on dark, primary bg on light)
+ *   .comparison-card__title    xl extrabold (white on dark, primary on light)
+ *   .comparison-card__description sm (white-medium on dark, tertiary on light)
+ *   .comparison-card__items    flex column gap 8px
+ *   .comparison-card__item     flex row gap-xs (icon + text)
+ *   .comparison-card__item-icon  secondary color, flex-shrink:0
+ *   .comparison-card__item-text  sm (white-strong on dark, primary on light)
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * CTA SECTION — component (from components/ctaSection.css)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   Full-width dark CTA banner. NOTE: also defined as a page-level pattern below —
+ *   import ctaSection.css when using the component; use page-level class for custom variant.
+ *
+ *   .cta-section               padding 80px 131px, bg-quaternary (dark), flex center
+ *   .cta-section__content      flex column center, text-center, max-width 640px, gap-sm
+ *   .cta-section__title        3xl extrabold white
+ *   .cta-section__subtitle     md white-medium
+ *   .cta-section__btn          white bg + orange text (overrides .btn defaults with !important)
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * PRODUCT CARD (from components/productCard.css)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   Image-top card for grid/slider listings. Wraps .card. Hover: lift + deeper shadow.
+ *
+ *   .product-card              flex column, overflow hidden, no text-decoration; lift on hover
+ *   .product-card__image-wrap  aspect-ratio 288/176, overflow hidden
+ *   .product-card__image       cover, full size
+ *   .product-card__tags        absolute top-left: primary-bg pill tags
+ *   .product-card__tag         xs semibold white pill on primary bg
+ *   .discount-badge            shared: orange pill (xs bold, white text) — also used standalone
+ *   .product-card__discount-badge  absolute top-right on image
+ *   .product-card__body        flex column, gap 12px, padding 20px, flex:1
+ *   .product-card__text        flex column, gap 8px
+ *   .product-card__enrolled-badge  pill: faint-quaternary bg, orange text + border
+ *   .product-card__name        md bold primary
+ *   .product-card__description sm tertiary, clamp with -webkit-box (set -webkit-line-clamp)
+ *   .product-card__instructors flex wrap, gap-xs
+ *   .product-card__instructor  flex row gap-2xs: 24px avatar + xs name
+ *   .product-card__stats       flex row end, gap-sm; border-top: tertiary; list-style none
+ *   .product-card__stat        xs semibold pill: bg-card-tertiary, inline-flex center
+ *   .product-card__stat-icon   inline-flex, flex-shrink:0
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ENROLLED COURSE CARD (from components/enrolledCourseCard.css)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   Dashboard card for courses the student is enrolled in. Wrap in .card.
+ *
+ *   .enrolled-course-card          padding card-padding, flex column, gap-md
+ *   .enrolled-course-card__body    flex row, align-center, gap-md
+ *   .enrolled-course-card__thumbnail  80×80, cover, radius-sm
+ *   .enrolled-course-card__info    flex:1 column, gap 4px
+ *   .enrolled-course-card__tags    flex row gap-xs
+ *   .enrolled-course-card__tag     xs semibold pill
+ *   .enrolled-course-card__tag--dark    primary bg, white text
+ *   .enrolled-course-card__tag--outline  transparent, border-quaternary
+ *   .enrolled-course-card__title   md bold, truncated; inner <a> inherits color
+ *   .enrolled-course-card__activity  xs muted
+ *   .enrolled-course-card__stats   text-right, flex-shrink:0 (right column)
+ *   .enrolled-course-card__percent 2xl extrabold primary
+ *   .enrolled-course-card__stat-label  xs muted
+ *   .enrolled-course-card__progress   flex row gap-xs, align-center
+ *   .enrolled-course-card__progress-track  flex:1, height 8px, pill, bg-card-tertiary
+ *   .enrolled-course-card__progress-fill   height 100%, orange bg, animates width
+ *   .enrolled-course-card__progress-label  xs semibold secondary, min-width 34px
+ *   .enrolled-course-card__actions  flex row gap-xs, flex-wrap
+ *   .enrolled-course-card__btn-continue  inline-flex gap 6px, sm semibold link
+ *   .enrolled-course-card__btn-action   inline-flex, padding 7px 14px, radius-lg, border-quaternary
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * FILTER DRAWER PATTERN (from pages/courses.css — copy when needed)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   .filter-drawer           fixed inset, display:none; .is-open → display:block
+ *   .filter-drawer__overlay  dark semi-transparent backdrop
+ *   .filter-drawer__panel    right-anchored 360px panel, top: navbar-height
+ *   .filter-drawer__header   title + close button, border-bottom
+ *   .filter-drawer__body     flex:1 overflow-y:auto scrollable content
+ *   .filter-drawer__footer   apply + reset buttons, border-top
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * DARK THEME
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   [data-theme="dark"] overrides live in theme.css.
+ *   Tokens already override: --color-bg-primary/secondary/card/*, --color-text-primary,
+ *   --border-tertiary, --border-card-primary.
+ *   If your component needs a dark override, add it to theme.css, never here.
+ *   All transitions on bg/color/border/fill/stroke fire automatically
+ *   (set globally in styles.css body * rule).
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * RESPONSIVE BREAKPOINTS (match Bootstrap 5 + sidebar breakpoints)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   Phone:          @media (max-width: 767.98px)
+ *   Tablet/laptop:  @media (max-width: 1199.98px)
+ *   Wide:           no breakpoint (base styles)
+ */
+
+
+/* ─── 1. Import section ───────────────────────────────────────────────────────
+ *
+ * PUBLIC PAGE example — minimal public page with hero + data grid + form:
+ */
+@import url('../styles.css');
+@import url('../components/button.css');
+@import url('../components/navbar.css');
+@import url('../components/footer.css');
+@import url('../components/hero.css');
+@import url('../components/forms.css');
+@import url('../components/pagination.css');
+@import url('../components/card.css');
+@import url('../components/kpiCard.css');
+@import url('../components/sectionHeader.css');
+@import url('../components/dataTable.css');
+@import url('../components/confirmModal.css');
+
+/*
+ * DASHBOARD PAGE example — swap @imports above with:
+ *
+ * @import url('../styles.css');
+ * @import url('../components/button.css');
+ * @import url('../components/navbar.css');
+ * @import url('../components/sidebar.css');
+ * @import url('../components/card.css');
+ * @import url('../components/kpiCard.css');
+ * @import url('../components/sectionHeader.css');
+ * @import url('../components/dataTable.css');
+ * @import url('../components/forms.css');
+ * @import url('../components/confirmModal.css');
+ * @import url('../components/pagination.css');
+ *
+ * Note: footer.css and hero.css are NOT imported on dashboard pages.
+ * Note: sidebar.css provides body:has(aside .sidebar) main auto-margin.
+ */
+
+
+/* ─── 2. Page layout ──────────────────────────────────────────────────────────
+ *
+ * PUBLIC PAGE: sections live directly in <main>, full-width
+ * Each section handles its own padding internally.
+ *
+ * .page-section — shared wrapper used by all main content sections.
+ * Use container-style padding for public pages.
+ */
+
+.page-section {
+    padding: 40px 131px;
+}
+
+/*
+ * DASHBOARD PAGE: .page-content wraps all sections inside <main>
+ * <main>
+ *     <aside></aside>
+ *     <div class="page-content">
+ *         <section id="page-header"></section>
+ *         <section id="page-body"  ></section>
+ *     </div>
+ * </main>
+ *
+ * Dashboard sections use padding: 0 32px (+ padding-top: 32px per section).
+ * Section header: use .section-header which already has padding: 0 32px; padding-top: 32px.
+ */
+
+.page-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ─── 3. Hero overrides ───────────────────────────────────────────────────────
+ *
+ * hero.css provides base hero variants. Override spacing or layout here.
+ * Never override colors — use tokens.
+ */
+
+/* Example: tighten hero padding for a dashboard-adjacent public page */
+#hero .hero-simple {
+    padding: 48px 131px;
+}
+
+
+/* ─── 4. Stats bar ────────────────────────────────────────────────────────────
+ *
+ * Page-level variant with dividers and centered layout.
+ * Use import components/statsBar.css for the simpler component version.
+ * For dashboard KPI cards, use .kpi-card inside a .card.
+ */
+
+.stats-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: var(--space-xl);
+    padding: var(--space-2xl) 131px;
+    background: var(--color-bg-primary);
+    border-top: var(--border-quaternary);
+    border-bottom: var(--border-quaternary);
+}
+
+.stats-bar__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2xs);
+    text-align: center;
+}
+
+.stats-bar__value {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-tight);
+}
+
+.stats-bar__label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.stats-bar__divider {
+    width: 1px;
+    height: 48px;
+    background: var(--border-quaternary);
+    flex-shrink: 0;
+}
+
+
+/* ─── 5. KPI grid (dashboard) ────────────────────────────────────────────────
+ *
+ * Wraps .card > .kpi-card cells in a responsive grid.
+ */
+
+.kpis-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+    padding: 0 32px;
+    margin-bottom: var(--space-lg);
+}
+
+
+/* ─── 6. Items section ────────────────────────────────────────────────────────
+ *
+ * Generic content grid for cards (public pages) or table (dashboard pages).
+ * For a card grid, use .items-grid.
+ * For a data table, the renderDataTable() output already includes all markup.
+ */
+
+.items-section {
+    padding: var(--space-2xl) 131px;
+}
+
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+}
+
+.items-section__empty {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    padding: var(--space-2xl) 0;
+    text-align: center;
+}
+
+
+/* ─── 7. Filter drawer ────────────────────────────────────────────────────────
+ *
+ * Right-side slide-in panel for advanced filters.
+ * Toggle .is-open on .filter-drawer to show/hide.
+ */
+
+.filter-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    display: none;
+}
+
+.filter-drawer.is-open {
+    display: block;
+}
+
+.filter-drawer__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    cursor: pointer;
+}
+
+.filter-drawer__panel {
+    position: absolute;
+    top: var(--navbar-height);
+    right: 0;
+    height: calc(100% - var(--navbar-height));
+    width: 360px;
+    max-width: 90vw;
+    background: var(--color-bg-primary);
+    display: flex;
+    flex-direction: column;
+    box-shadow: -4px 0 32px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    min-height: 0;
+}
+
+.filter-drawer__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: var(--border-primary);
+    flex-shrink: 0;
+}
+
+.filter-drawer__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    margin: 0;
+}
+
+.filter-drawer__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    transition: background var(--transition-base);
+}
+
+.filter-drawer__close:hover {
+    background: var(--color-bg-muted);
+}
+
+.filter-drawer__body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.filter-drawer__footer {
+    display: flex;
+    gap: 12px;
+    padding: 16px 24px;
+    border-top: var(--border-primary);
+    flex-shrink: 0;
+}
+
+.filter-drawer__footer .btn {
+    flex: 1;
+    height: var(--button-height-lg);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+}
+
+
+/* ─── 8. Form section ─────────────────────────────────────────────────────────
+ *
+ * Page-level centered form layout for public pages.
+ * For dashboard forms inside a titled card, import components/formCard.css instead.
+ * All form fields use global classes from forms.css — never override them here.
+ */
+
+.form-section {
+    padding: var(--space-2xl) 131px;
+    display: flex;
+    justify-content: center;
+}
+
+.form-card {
+    width: 100%;
+    max-width: 560px;
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.form-card__title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.form-card__subtitle {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin: -12px 0 0;
+}
+
+.form-card__fields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.form-card__actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    margin-top: var(--space-xs);
+}
+
+
+/* ─── 9. How it works section ────────────────────────────────────────────────
+ *
+ * Public page static section — no data-spinner, no API.
+ * Three-column step layout.
+ */
+
+.how-it-works {
+    padding: var(--space-2xl) 131px;
+    background: var(--color-bg-primary);
+}
+
+.how-it-works__header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+}
+
+.how-it-works__title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-xs);
+}
+
+.how-it-works__subtitle {
+    font-size: var(--font-size-md);
+    color: var(--color-text-muted);
+    margin: 0;
+}
+
+.how-it-works__steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+}
+
+.how-it-works__step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-md);
+    padding: var(--space-xl);
+}
+
+.how-it-works__step-num {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-pill);
+    background: var(--color-bg-quaternary-faint);
+    border: var(--border-secondary-medium);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-text-secondary);
+    flex-shrink: 0;
+}
+
+.how-it-works__step-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.how-it-works__step-desc {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    line-height: var(--line-height-relaxed);
+    margin: 0;
+}
+
+
+/* ─── 10. CTA section ─────────────────────────────────────────────────────────
+ *
+ * Page-level CTA variant (custom bg token). For the canonical CTA with
+ * white button + content wrapper, import components/ctaSection.css instead.
+ */
+
+.cta-section {
+    padding: var(--space-3xl) 131px;
+    background: var(--color-bg-tertiary);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+}
+
+.cta-section__title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-text-white);
+    margin: 0;
+}
+
+.cta-section__subtitle {
+    font-size: var(--font-size-md);
+    color: var(--color-text-white-medium);
+    margin: -8px 0 0;
+    max-width: 560px;
+}
+
+.cta-section__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+
+/* ─── 11. Responsive ──────────────────────────────────────────────────────────
+ *
+ * Always use the same breakpoints as Bootstrap 5 + sidebar.css.
+ * Adjust layouts in this order: wide (base) → tablet → phone.
+ */
+
+/* Tablet / laptop */
+@media (max-width: 1199.98px) {
+    .page-section,
+    .items-section,
+    .form-section,
+    .how-it-works,
+    .cta-section {
+        padding-inline: var(--space-xl);
+    }
+
+    .kpis-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .items-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .how-it-works__steps {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stats-bar {
+        padding-inline: var(--space-xl);
+        flex-wrap: wrap;
+        gap: var(--space-lg);
+    }
+}
+
+/* Phone */
+@media (max-width: 767.98px) {
+    .page-section,
+    .items-section,
+    .form-section,
+    .how-it-works,
+    .cta-section {
+        padding-inline: var(--space-md);
+    }
+
+    .kpis-grid {
+        grid-template-columns: 1fr;
+        padding-inline: var(--space-md);
+    }
+
+    .items-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .how-it-works__steps {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-bar {
+        padding-inline: var(--space-md);
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .stats-bar__item {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .stats-bar__divider {
+        display: none;
+    }
+
+    .cta-section__actions {
+        flex-direction: column;
+        width: 100%;
+    }
+}

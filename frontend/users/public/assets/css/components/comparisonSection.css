@@ -1,0 +1,171 @@
+/* ─── Comparison Section ─────────────────────────────── */
+.comparison-section {
+    padding: 80px 131px;
+    background: var(--color-bg-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+}
+
+.comparison-section__header {
+    text-align: center;
+    max-width: 580px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.comparison-section__label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-secondary);
+    letter-spacing: 0.06em;
+    margin: 0;
+}
+
+.comparison-section__title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-text-primary);
+    line-height: 1.2;
+    margin: 0;
+}
+
+.comparison-section__subtitle {
+    font-size: var(--font-size-md);
+    color: var(--color-text-tertiary);
+    line-height: 1.6;
+}
+
+.comparison-section__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+    width: 100%;
+}
+
+/* ─── Card ───────────────────────────────────────────── */
+.comparison-card {
+    border-radius: var(--radius-xl);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.comparison-card--dark {
+    background: var(--color-bg-card-quaternary);
+}
+
+.comparison-card--light {
+    background: var(--color-bg-card-tertiary);
+}
+
+/* Decorative blob */
+.comparison-card::after {
+    content: '';
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.comparison-card--dark::after {
+    background: var(--color-secondary);
+    opacity: 0.12;
+    top: -80px;
+    right: -80px;
+}
+
+.comparison-card--light::after {
+    background: var(--color-bg-tertiary-faint);
+    bottom: -80px;
+    right: -80px;
+}
+
+/* ─── Badge ──────────────────────────────────────────── */
+.comparison-card__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 99px;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    width: fit-content;
+    margin-bottom: 8px;
+}
+
+.comparison-card--dark .comparison-card__badge {
+    background: var(--color-secondary);
+    color: var(--color-text-white);
+}
+
+.comparison-card--light .comparison-card__badge {
+    background: var(--color-bg-tertiary);
+    color: var(--color-text-white);
+}
+
+/* ─── Content ────────────────────────────────────────── */
+.comparison-card__title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-extrabold);
+    line-height: 1.3;
+    margin: 0;
+}
+
+.comparison-card--dark .comparison-card__title {
+    color: var(--color-text-white);
+}
+
+.comparison-card--light .comparison-card__title {
+    color: var(--color-text-primary);
+}
+
+.comparison-card__description {
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+    margin-bottom: 8px;
+}
+
+.comparison-card--dark .comparison-card__description {
+    color: var(--color-text-white-medium);
+}
+
+.comparison-card--light .comparison-card__description {
+    color: var(--color-text-tertiary);
+}
+
+/* ─── Items ──────────────────────────────────────────── */
+.comparison-card__items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.comparison-card__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.comparison-card__item-icon {
+    color: var(--color-secondary);
+    line-height: 0;
+    flex-shrink: 0;
+}
+
+.comparison-card__item-text {
+    font-size: var(--font-size-sm);
+}
+
+.comparison-card--dark .comparison-card__item-text {
+    color: var(--color-text-white-strong);
+}
+
+.comparison-card--light .comparison-card__item-text {
+    color: var(--color-text-primary);
+}

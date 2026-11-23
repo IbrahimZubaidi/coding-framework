@@ -1,0 +1,35 @@
+# requirements.txt
+
+# Core FastAPI framework
+fastapi
+
+# ASGI server
+gunicorn
+uvicorn
+uvloop; platform_system != "Windows"
+httptools
+
+# Database (PostgreSQL async)
+psycopg[binary]
+psycopg_pool
+
+# Pydantic / settings
+pydantic
+pydantic[email]
+pydantic-settings
+jinja2
+
+# JWT / Auth
+PyJWT
+
+# Redis async
+redis
+
+# Password hashing
+pwdlib[argon2]
+
+# Environment variables
+python-dotenv
+
+# Integrations
+cloudinary

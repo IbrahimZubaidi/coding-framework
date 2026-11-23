@@ -1,0 +1,168 @@
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: var(--color-bg-quaternary);
+    border-radius: var(--radius-lg);
+    color: var(--color-text-white);
+    padding: 8px 20px;
+    border: none;
+}
+
+.btn:hover,
+.btn:focus,
+.btn:active {
+    background-color: rgb(var(--color-secondary-rgb) / 85%) !important;
+    color: var(--color-text-white);
+    border: none;
+}
+
+.btn--dark {
+    background-color: var(--color-primary);
+}
+
+.btn--dark:hover,
+.btn--dark:focus,
+.btn--dark:active {
+    background-color: rgb(var(--color-primary-rgb) / 75%) !important;
+}
+
+.btn--lg {
+    height: var(--button-height-lg);
+    padding: 0 28px;
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-semibold);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn--full {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ─── Ghost variants ─────────────────────────────────── */
+
+.btn--ghost {
+    background: transparent;
+    border: none;
+    color: var(--color-secondary);
+    font-weight: var(--font-weight-semibold);
+}
+
+.btn--ghost:hover,
+.btn--ghost:focus,
+.btn--ghost:active {
+    background: var(--color-bg-quaternary-faint) !important;
+    color: var(--color-secondary) !important;
+    border: none;
+}
+
+.btn--ghost-green {
+    background: var(--color-bg-success);
+    border: none;
+    color: var(--color-text-success);
+    font-weight: var(--font-weight-semibold);
+}
+
+.btn--ghost-green:hover,
+.btn--ghost-green:focus,
+.btn--ghost-green:active {
+    background: rgb(var(--color-text-success) / 20%) !important;
+    color: var(--color-text-success) !important;
+    border: none;
+}
+
+.btn--pill {
+    border-radius: var(--radius-pill) !important;
+}
+
+.btn--inline-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+/* ─── Outline variant ────────────────────────────────── */
+
+.btn--outline {
+    background: var(--color-bg-primary) !important;
+    border: var(--border-secondary) !important;
+    color: var(--color-text-primary) !important;
+    font-weight: var(--font-weight-semibold);
+}
+
+.btn--outline:hover,
+.btn--outline:focus,
+.btn--outline:active {
+    background: var(--color-bg-secondary) !important;
+    color: var(--color-text-primary) !important;
+}
+
+.ghost-btn {
+    display: flex;
+    border: none;
+    background-color: transparent;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.ghost-btn:hover {
+    background-color: var(--color-bg-primary-faint);
+    color: var(--color-text-white);
+}
+
+.ghost-btn svg {
+    stroke: var(--color-text-white);
+    opacity: .6;
+}
+
+.ghost-btn:hover svg {
+    opacity: 1;
+}
+
+/* ─── Button loading spinner ─────────────────────────── */
+
+.btn-spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--color-bg-tertiary-faint);
+    border-top-color: rgb(var(--color-white-rgb) / 70%);
+    border-radius: 50%;
+    animation: btn-spin 0.65s linear infinite;
+    flex-shrink: 0;
+}
+
+@keyframes btn-spin {
+    to { transform: rotate(360deg); }
+}
+
+.btn[aria-busy="true"] {
+    pointer-events: none;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.btn--danger {
+    background-color: var(--color-text-danger);
+}
+
+.btn--danger:hover,
+.btn--danger:focus,
+.btn--danger:active {
+    background-color: rgb(var(--color-text-danger) / 85%) !important;
+}
+
+.btn--sm {
+    padding: 6px 14px;
+    font-size: var(--font-size-sm);
+}

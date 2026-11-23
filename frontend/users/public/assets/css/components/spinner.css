@@ -1,0 +1,9 @@
+.spinner-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 200px;
+    color: var(--color-secondary);
+    padding: var(--space-2xl) 0;
+}

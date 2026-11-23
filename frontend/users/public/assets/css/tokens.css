@@ -1,0 +1,170 @@
+:root {
+    /* Brand Colors */
+    --color-primary: #0F1B2D;
+    --color-primary-rgb: 15 27 45;
+    --color-secondary: #6C63FF;
+    --color-secondary-rgb: 108 99 255;
+    --color-white: #FFFFFF;
+    --color-white-rgb: 255 255 255;
+    --color-black: #000000;
+    --color-black-rgb: 0 0 0;
+
+    /* Background Colors */
+    --color-bg-primary: var(--color-white);
+    --color-bg-primary-faint: rgb(var(--color-white-rgb) / 10%);
+    --color-bg-secondary: #F5F6FA;
+    --color-bg-tertiary: #131C2E;
+    --color-bg-tertiary-faint: rgb(var(--color-primary-rgb) / 10%);
+    --color-bg-quaternary: var(--color-secondary);
+    --color-bg-quaternary-medium: rgb(var(--color-secondary-rgb) / 30%);
+    --color-bg-quaternary-faint: rgb(var(--color-secondary-rgb) / 10%);
+    --color-bg-footer: #131C2E;
+
+    --color-bg-nav-item-hover: #F4F4FF;
+    --color-bg-nav-logout-hover: #fb2c361a;
+
+    --color-bg-card-primary: var(--color-white);
+    --color-bg-card-secondary: #F5F6FA;
+    --color-bg-card-tertiary: #E8E9F0;
+    --color-bg-card-quaternary: var(--color-primary);
+
+    /* Text Colors */
+    --color-text-primary: var(--color-primary);
+    --color-text-primary-medium: rgb(var(--color-primary-rgb) / 60%);
+    --color-text-secondary: var(--color-secondary);
+    --color-text-tertiary: #6B7280;
+
+    --color-text-white: var(--color-white);
+    --color-text-white-strong: rgb(var(--color-white-rgb) / 80%);
+    --color-text-white-medium: rgb(var(--color-white-rgb) / 60%);
+    --color-text-white-subtle: rgb(var(--color-white-rgb) / 50%);
+    --color-text-white-faint:  rgb(var(--color-white-rgb) / 40%);
+    --color-text-white-muted:  rgb(var(--color-white-rgb) / 30%);
+
+    /* Borders */
+    --border-primary: 1px solid var(--color-primary);
+    --border-secondary: 1px solid var(--color-secondary);
+    --border-secondary-medium: 1px solid rgb(var(--color-secondary-rgb) / 30%);
+    --border-secondary-faint: 1px solid rgb(var(--color-secondary-rgb) / 10%);
+    --border-tertiary: 1px solid #E4E5EE;
+    --border-quaternary: 1px solid #ECEDF5;
+
+    --border-white: 1px solid var(--color-white);
+    --border-white-strong: 1px solid rgb(var(--color-white-rgb) / 40%);
+    --border-white-medium: 1px solid rgb(var(--color-white-rgb) / 30%);
+    --border-white-subtle: 1px solid rgb(var(--color-white-rgb) / 20%);
+    --border-white-faint:  1px solid rgb(var(--color-white-rgb) / 10%);
+
+    --border-card-primary: 1px solid #E4E5EE;
+    --border-card-secondary: 1px solid #E4E5EE00;
+    --border-card-tertiary: 1px solid #FFFFFF1A;
+
+    --color-bg-muted: #F9FAFB;
+    --color-bg-success: #F0FDF4;
+    --color-bg-warning: #FFFBEB;
+    --color-bg-danger: #FEF2F2;
+    --color-bg-selected: #6C63FF0D;
+    --color-bg-info: #EEF2FF;
+
+    --color-text-muted:  #6A7282;
+    --color-text-success: #00C950;
+    --color-text-warning: #FE9A00;
+    --color-text-danger: #FB2C36;
+    --color-text-selected: var(--color-secondary);
+    --color-border-info: #BB4D00;
+    --color-text-disabled: #D1D5DC;
+
+    --border-muted: 2px solid  #E5E7EB;
+    --border-success: 2px solid #00C950;
+    --border-warning: 2px solid #FE9A00;
+    --border-danger: 2px solid #FB2C36;
+    --border-selected: 2px solid var(--color-secondary);
+    --border-info: 2px solid #FEE685;
+
+    /* Fonts */
+    --font-family-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+
+    --font-size-2xs: 10px;
+    --font-size-xs: 12px;
+    --font-size-sm: 14px;
+    --font-size-md: 16px;
+    --font-size-lg: 18px;
+    --font-size-xl: 20px;
+    --font-size-2xl: 24px;
+    --font-size-3xl: 36px;
+    --font-size-4xl: 48px;
+
+    --line-height-tight: 1.2;
+    --line-height-base: 1.5;
+    --line-height-relaxed: 1.7;
+    
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extrabold: 800;
+
+    /* Sizes */
+    --space-2xs: 4px;
+    --space-xs: 8px;
+    --space-sm: 12px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-2xl: 48px;
+    --space-3xl: 64px;
+
+    --page-padding-x-sm: 16px;
+    --page-padding-x-md: 24px;
+    --page-padding-x-lg: 32px;
+    --page-padding-y-sm: 16px;
+    --page-padding-y-md: 24px;
+    --page-padding-y-lg: 32px;
+
+    --border-width-thin: 1px;
+    --border-width-medium: 2px;
+    --border-width-thick: 3px;
+    --border-style-default: solid;
+
+    --radius-xs: 4px;
+    --radius-sm: 8px;
+    --radius-lg: 10px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-2xl: 24px;
+    --radius-exl: 32px;
+    --radius-pill: 999px;
+
+    --card-padding: 24px;
+
+    --button-height-sm: 36px;
+    --button-height-md: 44px;
+    --button-height-lg: 52px;
+    --navbar-height: 65px;
+
+    --input-height: 46px;
+    --input-padding-x: 14px;
+    --input-padding-y: 12px;
+
+    --card-shadow: 0 10px 30px rgb(var(--color-primary-rgb) / 8%);
+    --card-shadow-hover: 0 16px 40px rgb(var(--color-primary-rgb) / 12%);
+    --surface-shadow-sm: 0 4px 12px rgb(var(--color-primary-rgb) / 6%);
+    --surface-shadow-md: 0 8px 24px rgb(var(--color-primary-rgb) / 8%);
+    --focus-ring: 0 0 0 3px rgb(var(--color-secondary-rgb) / 18%);
+
+    /* Motion */
+    --transition-fast: 160ms ease;
+    --transition-base: 240ms ease;
+    --transition-slow: 360ms ease;
+
+    /* Z-Index Scale */
+    --z-base:     1;
+    --z-raised:   10;
+    --z-dropdown: 100;
+    --z-sticky:   200;
+    --z-sidebar:  500;
+    --z-navbar:   1000;
+    --z-modal:    1001;
+    --z-toast:    1002;
+}

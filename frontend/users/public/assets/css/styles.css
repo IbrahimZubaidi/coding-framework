@@ -1,0 +1,112 @@
+@import url('./tokens.css');
+@import url('./theme.css');
+@import url('./components/dropdown.css');
+@import url('./components/spinner.css');
+@import url('./components/message.css');
+@import url('./components/statsBar.css');
+@import url('./components/productCard.css');
+@import url('./components/kpiCard.css');
+@import url('./components/actionCard.css');
+@import url('./components/formCard.css');
+@import url('./components/selectOptions.css');
+@import url('./components/sliderSection.css');
+@import url('./components/stepsSection.css');
+@import url('./components/comparisonSection.css');
+@import url('./components/ctaSection.css');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-base);
+    color: var(--color-text-primary);
+    background: var(--color-bg-secondary);
+    height: 100vh;
+}
+
+body,
+body * {
+    transition: background-color var(--transition-base),
+                color var(--transition-base),
+                border-color var(--transition-base),
+                fill var(--transition-base),
+                stroke var(--transition-base);
+}
+
+main {
+    flex: 1;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: unset;
+}
+
+.dropdown-menu {
+    max-width: 100vw;
+}
+
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+.btn-nan {
+    border: unset;
+    padding: unset;
+    background-color: unset;
+    color: var(--color-text-primary)
+}
+
+/* ─── Scrollbars ─────────────────────────────────────────────────────────── */
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--color-primary-rgb) / 22%) transparent;
+}
+
+/* Chrome / Safari / Edge */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(var(--color-primary-rgb) / 22%);
+    border-radius: var(--radius-pill);
+    transition: background var(--transition-fast);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-secondary);
+}
+
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+/* ─── App logo theme switching (auth pages only) ────────── */
+.auth-brand .app-logo-wrap { display: flex; justify-content: center; }
+
+.auth-brand .app-logo--dark              { display: none; }
+[data-theme="dark"] .auth-brand .app-logo--dark  { display: block; }
+[data-theme="dark"] .auth-brand .app-logo:not(.app-logo--dark) { display: none; }

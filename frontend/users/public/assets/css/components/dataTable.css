@@ -1,0 +1,253 @@
+/* ─── Toolbar ─────────────────────────────────────────── */
+
+.data-table-toolbar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-md);
+}
+
+.data-table-search {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    background: var(--color-bg-primary);
+    border: var(--border-quaternary);
+    border-radius: var(--radius-pill);
+    padding: 0 var(--space-md);
+    height: var(--button-height-md);
+}
+
+.data-table-search svg {
+    flex-shrink: 0;
+    color: var(--color-text-muted);
+}
+
+.data-table-search__input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    outline: none;
+    min-width: 0;
+}
+
+.data-table-search__input::placeholder {
+    color: var(--color-text-muted);
+}
+
+.data-table-toolbar__end {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+/* ─── Chips ──────────────────────────────────────────── */
+
+.data-table-chips {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    flex-wrap: wrap;
+}
+
+.data-table-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 42px;
+    padding: 0 17px;
+    border-radius: 14px;
+    border: var(--border-tertiary);
+    background: var(--color-bg-primary);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: background var(--transition-base), color var(--transition-base), border-color var(--transition-base);
+    white-space: nowrap;
+}
+
+.data-table-chip:hover:not(.is-active) {
+    background: var(--color-bg-tertiary-faint);
+}
+
+.data-table-chip.is-active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-text-white);
+}
+
+/* ─── Table ──────────────────────────────────────────── */
+
+.data-table-scroll {
+    overflow-x: auto;
+    border: var(--border-card-primary);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-sm);
+}
+
+/* ─── Head ───────────────────────────────────────────── */
+
+.data-table thead tr {
+    background: var(--color-bg-secondary);
+    border-bottom: var(--border-card-primary);
+}
+
+.data-table__th {
+    padding: 10px var(--space-md);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-muted);
+    text-align: left;
+    white-space: nowrap;
+    user-select: none;
+}
+
+
+.data-table__th.is-sortable {
+    cursor: pointer;
+}
+
+.data-table__th.is-sortable:hover {
+    color: var(--color-text-primary);
+}
+
+.data-table__th[data-sort-order="asc"]::after  { content: ' ↑'; }
+.data-table__th[data-sort-order="desc"]::after { content: ' ↓'; }
+
+/* ─── Body ───────────────────────────────────────────── */
+
+.data-table tbody tr {
+    background: var(--color-bg-card-primary);
+    border-bottom: var(--border-quaternary);
+    transition: background var(--transition-fast);
+}
+
+.data-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.data-table tbody tr:hover {
+    background: var(--color-bg-muted);
+}
+
+.data-table__td {
+    padding: var(--space-md);
+    color: var(--color-text-primary);
+    vertical-align: middle;
+}
+
+.data-table__empty {
+    padding: var(--space-2xl) var(--space-md);
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+}
+
+/* ─── Table Ghost Button ─────────────────────────────── */
+
+.data-table .ghost-btn svg {
+    stroke: var(--color-text-muted);
+}
+
+.data-table .ghost-btn:hover svg {
+    stroke: var(--color-text-primary);
+}
+
+/* ─── Cell Variants ─────────────────────────────────── */
+
+/* Truncate long text with ellipsis — set a max-width on the td */
+.data-table__td--truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Highlight a numeric value (e.g. price/amount) */
+.data-table__td--accent {
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-bold);
+}
+
+/* Muted secondary text */
+.data-table__td--muted {
+    color: var(--color-text-muted);
+}
+
+.data-table-ref {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-xs);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    font-family: 'Consolas', monospace;
+}
+
+/* ─── Footer (pagination etc.) ──────────────────────── */
+
+.data-table-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: var(--space-md) 0 0;
+    gap: var(--space-sm);
+}
+
+.data-table-footer .pagination {
+    margin-top: 0;
+}
+
+/* ─── Status Tags ────────────────────────────────────── */
+
+.data-table-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    white-space: nowrap;
+}
+
+.data-table-status--approved {
+    background: var(--color-bg-success);
+    color: var(--color-text-success);
+    border: var(--border-success);
+}
+
+.data-table-status--pending,
+.data-table-status--pending_approval,
+.data-table-status--pending_completion {
+    background: var(--color-bg-warning);
+    color: var(--color-text-warning);
+    border: var(--border-warning);
+}
+
+.data-table-status--rejected,
+.data-table-status--canceled {
+    background: var(--color-bg-danger);
+    color: var(--color-text-danger);
+    border: var(--border-danger);
+}
+
+.data-table-status--refunded {
+    background: var(--color-bg-warning);
+    color: var(--color-text-warning);
+    border: var(--border-warning);
+}

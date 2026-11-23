@@ -1,0 +1,90 @@
+.slider-section {
+    padding: 80px 131px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    background-color: var(--color-bg-primary);
+}
+
+.slider-section__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.slider-section__titles {
+    display: flex;
+    flex-direction: column;
+}
+
+.slider-section__title {
+    font-size: 14px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+.slider-section__subtitle {
+    font-size: 30px;
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-extrabold);
+    margin: 0;
+}
+
+.slider-section__link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+}
+
+/* ─── Slider track ───────────────────────────────────── */
+
+.slider-section__track {
+    display: flex;
+    gap: 25px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+}
+
+.slider-section__track::-webkit-scrollbar {
+    display: none;
+}
+
+.slider-section__track > * {
+    flex: 0 0 calc((100% - 25px * 3) / 4);
+    scroll-snap-align: start;
+}
+
+/* ─── Controls ───────────────────────────────────────── */
+
+.slider-section__controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-xs);
+}
+
+.slider-section__btn {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-pill);
+    border: var(--border-secondary-medium);
+    background: transparent;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+}
+
+.slider-section__btn:hover {
+    background: var(--color-bg-quaternary-faint);
+}
+
+.slider-section__btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}

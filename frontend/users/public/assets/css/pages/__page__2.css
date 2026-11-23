@@ -1,0 +1,307 @@
+/*
+ * example-page.css
+ *
+ * Reference implementation of a full dashboard page CSS.
+ * Covers: import order, page layout, KPI grid, data table section,
+ *         form card section, filter drawer, and responsive overrides.
+ *
+ * For a PUBLIC page: swap sidebar.css for footer.css + hero.css and
+ * change .page-content layout to full-width sections.
+ *
+ * See __page__.css for the full token reference and component class catalog.
+ */
+
+
+/* ─── 1. Imports ──────────────────────────────────────────────────────────────
+ *
+ * Always start with styles.css (tokens + theme + base reset).
+ * Then import ONLY the component CSS files this page actually renders.
+ * Do NOT import everything — unused CSS bloats the page.
+ *
+ * Dashboard page imports:
+ */
+
+@import url('../styles.css');
+@import url('../components/button.css');
+@import url('../components/navbar.css');
+@import url('../components/sidebar.css');
+@import url('../components/card.css');
+@import url('../components/kpiCard.css');
+@import url('../components/sectionHeader.css');
+@import url('../components/dataTable.css');
+@import url('../components/forms.css');
+@import url('../components/formCard.css');
+@import url('../components/confirmModal.css');
+@import url('../components/pagination.css');
+
+/*
+ * Public page imports (swap the dashboard ones above with these):
+ *
+ * @import url('../styles.css');
+ * @import url('../components/button.css');
+ * @import url('../components/navbar.css');
+ * @import url('../components/footer.css');
+ * @import url('../components/hero.css');         — provides breadcrumb + badge too
+ * @import url('../components/card.css');
+ * @import url('../components/kpiCard.css');
+ * @import url('../components/sectionHeader.css');
+ * @import url('../components/dataTable.css');
+ * @import url('../components/forms.css');
+ * @import url('../components/confirmModal.css');
+ * @import url('../components/pagination.css');
+ * @import url('../components/statsBar.css');     — if page has a stats strip
+ * @import url('../components/stepsSection.css'); — if page has a how-it-works grid
+ * @import url('../components/ctaSection.css');   — if page has a CTA banner
+ * @import url('../components/productCard.css');  — if page has listing cards
+ * @import url('../components/sliderSection.css');— if page has a horizontal slider
+ */
+
+
+/* ─── 2. Page layout ──────────────────────────────────────────────────────────
+ *
+ * Dashboard page: sidebar sets body:has(aside .sidebar) main → auto margin-start 260px.
+ * .page-content is the flex column that holds all sections to the right of the sidebar.
+ *
+ * Public page: remove .page-content; sections are direct children of <main>,
+ * each handling its own padding via .page-section or component-specific padding.
+ */
+
+.page-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ─── 3. KPI cards grid ───────────────────────────────────────────────────────
+ *
+ * Place .kpis-grid directly inside .page-content, below the section header.
+ * Each cell: .card > .kpi-card — renderKpiCard() already includes both wrappers.
+ * Never add an extra .card wrapper around renderKpiCard() output.
+ */
+
+.kpis-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+    padding: 0 var(--space-xl);
+    margin-bottom: var(--space-lg);
+}
+
+
+/* ─── 4. Table section ────────────────────────────────────────────────────────
+ *
+ * Wraps the renderDataTable() output plus the section header above it.
+ * renderDataTable() outputs the toolbar + scroll wrapper + table + footer.
+ * No extra padding needed on the table itself — dataTable.css handles it.
+ * Section header padding (0 32px, top 32px) comes from sectionHeader.css.
+ */
+
+.table-section {
+    padding: 0 var(--space-xl) var(--space-xl);
+}
+
+
+/* ─── 5. Form card section ────────────────────────────────────────────────────
+ *
+ * Used when a dashboard page has an edit form (e.g. profile, settings).
+ * .form-card (from formCard.css) is the titled card header + hint.
+ * Wrap the whole card in .card for the surface, then put .form-card inside.
+ *
+ * Layout: two-column on desktop for multi-field forms, single-column on mobile.
+ */
+
+.form-section {
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.form-section__card {
+    max-width: 720px;
+}
+
+.form-section__card .form-card__fields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.form-section__card .form-row {
+    display: flex;
+    gap: var(--space-md);
+}
+
+.form-section__card .form-row .form-field {
+    flex: 1;
+}
+
+.form-section__card .form-card__actions {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: var(--space-xs);
+}
+
+
+/* ─── 6. Filter drawer ────────────────────────────────────────────────────────
+ *
+ * Right-side slide-in filter panel. Toggle .is-open on .filter-drawer.
+ * Wire: filter button → add .is-open; overlay click + close btn → remove .is-open.
+ * Body fields use standard .form-field structure from forms.css.
+ */
+
+.filter-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    display: none;
+}
+
+.filter-drawer.is-open {
+    display: block;
+}
+
+.filter-drawer__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    cursor: pointer;
+}
+
+.filter-drawer__panel {
+    position: absolute;
+    top: var(--navbar-height);
+    right: 0;
+    height: calc(100% - var(--navbar-height));
+    width: 360px;
+    max-width: 90vw;
+    background: var(--color-bg-primary);
+    display: flex;
+    flex-direction: column;
+    box-shadow: -4px 0 32px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+}
+
+.filter-drawer__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: var(--border-tertiary);
+    flex-shrink: 0;
+}
+
+.filter-drawer__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    margin: 0;
+}
+
+.filter-drawer__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    color: var(--color-text-muted);
+    transition: background var(--transition-base);
+}
+
+.filter-drawer__close:hover {
+    background: var(--color-bg-secondary);
+}
+
+.filter-drawer__body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.filter-drawer__footer {
+    display: flex;
+    gap: var(--space-sm);
+    padding: 16px 24px;
+    border-top: var(--border-tertiary);
+    flex-shrink: 0;
+}
+
+.filter-drawer__footer .btn {
+    flex: 1;
+    height: var(--button-height-lg);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+}
+
+
+/* ─── 7. Empty / loading states ───────────────────────────────────────────────
+ *
+ * spinner.css auto-handles [data-spinner] via scripts.js — no extra CSS needed.
+ * For custom empty states inside a section (no API data), use:
+ */
+
+.section-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding: var(--space-3xl) 0;
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+}
+
+
+/* ─── 8. Responsive ───────────────────────────────────────────────────────────
+ *
+ * Always use the same two breakpoints as Bootstrap 5 + sidebar.css.
+ * Never add a third breakpoint unless absolutely necessary.
+ *
+ * Tablet/laptop: sidebar collapses to 65px icon-only.
+ * Phone: sidebar becomes bottom tab bar, single-column layout.
+ */
+
+/* Tablet / laptop */
+@media (max-width: 1199.98px) {
+    .kpis-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .form-section__card .form-row {
+        flex-direction: column;
+    }
+}
+
+/* Phone */
+@media (max-width: 767.98px) {
+    .kpis-grid {
+        grid-template-columns: 1fr;
+        padding-inline: var(--space-md);
+    }
+
+    .table-section {
+        padding-inline: var(--space-md);
+    }
+
+    .form-section {
+        padding: var(--space-md);
+    }
+
+    .form-section__card {
+        max-width: 100%;
+    }
+
+    .filter-drawer__panel {
+        width: 100%;
+        max-width: 100%;
+    }
+}
